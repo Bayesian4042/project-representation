@@ -1,0 +1,804 @@
+=== Feature Summary for full-stack-nextjs/app/layout.tsx ===
+The provided TypeScript/TSX files collectively implement a basic layout and session management feature in a Next.js application. Here is an overview of the main functionality and components:
+
+### Main Functionality:
+The code implements a layout system for a Next.js application, which includes session management and a navigation bar. The key aspects of this feature include:
+- A consistent layout across pages with a global navigation bar.
+- Session management using `next-auth` to handle user authentication states.
+- Conditional rendering of the navigation bar based on the current page path.
+
+### Important Components:
+
+1. **RootLayout (`app/layout.tsx`):**
+   - Defines the overall structure and layout for the application.
+   - Utilizes the `SessionWrapper` to wrap the application in a session context, allowing for authentication state management.
+   - Includes a `Toaster` component for displaying notifications to users.
+   - Incorporates a `Navbar` component, providing site-wide navigation except on certain pages (e.g., `/dashboard`).
+   - Applies global styles and fonts (Inter font from Google Fonts).
+
+2. **NavBar (`components/NavBar.tsx`):**
+   - A navigation bar component that appears at the top of most application pages.
+   - Uses the `usePathname` hook to determine the current path and conditionally renders the navigation bar (hides it on dashboard pages).
+   - Provides links to the home page, login, and registration pages with buttons styled using a `Button` component.
+
+3. **SessionWrapper (`app/providers.tsx`):**
+   - A higher-order component that wraps its children with `SessionProvider` from `next-auth/react`.
+   - Ensures that any component nested inside it can access session and authentication information.
+
+### How They Work Together:
+- The `RootLayout` serves as the foundational layout for all pages in the Next.js application. It wraps the content with session management and applies consistent styles and navigation.
+- The `NavBar` is conditionally included in the layout, providing navigation options for most pages except those related to the dashboard. This ensures a clean user interface tailored to the user's location within the app.
+- The `SessionWrapper` ensures that authentication states are accessible throughout the application, enabling features like protected routes or personalized content based on the user's session state.
+
+Overall, these components provide a cohesive layout and session handling framework for the Next.js project, facilitating user navigation and authentication management.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/layout.tsx ===
+The provided TypeScript/TSX files collectively implement a basic layout structure for a Next.js web application with user session management and a navigation bar. Here's a breakdown of the main functionality and components, and how they work together:
+
+### Main Functionality
+The primary feature implemented by these files is to provide a consistent layout and session management across the Next.js application. This includes a navigation bar that is conditionally rendered based on the current route, and session handling to manage user authentication state.
+
+### Important Components
+1. **RootLayout (`layout.tsx`)**: 
+   - This is the foundational layout component for the application. It sets up the HTML structure, incorporates global styles, and applies a Google font. 
+   - It wraps the application in a session provider for authentication state management and includes a toaster component for displaying notifications.
+   - The `Navbar` component is included to provide navigation across the site.
+
+2. **Navbar (`NavBar.tsx`)**:
+   - This component renders a navigation bar with links to the home, login, and registration pages.
+   - It is conditionally rendered based on the current path; specifically, it is hidden on the dashboard route.
+   - It uses Next.js's `Link` component for client-side navigation, and a Bluetooth icon as part of the branding.
+
+3. **SessionWrapper (`providers.tsx`)**:
+   - This component uses `SessionProvider` from `next-auth/react` to wrap the application's children components, providing them access to authentication state.
+   - This is marked as a client component, meaning it is rendered on the client-side and can use React hooks and browser-specific features.
+
+### How They Work Together
+- **RootLayout**: This component is the entry point for rendering the layout of all pages within the Next.js application. It ensures that all pages have access to session data and the ability to display notifications through the `Toaster` component.
+- **SessionWrapper**: It is used within `RootLayout` to ensure that session management is consistently applied across the application, providing authentication context to all child components.
+- **Navbar**: The navigation bar is integrated into the `RootLayout` and provides links to essential parts of the application. It uses `usePathname` to determine the current route and hides itself on the dashboard page.
+
+Overall, these components provide a robust structure for building authenticated, user-friendly web applications using Next.js.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/error.tsx ===
+The provided `error.tsx` file is part of a Next.js project and implements an error handling feature. Here's an overview of the functionality and components:
+
+### Main Functionality:
+The `Error` component provides a user interface for displaying error messages when something goes wrong in the application. This component is used to handle and display errors in a user-friendly manner, allowing users to understand that an issue has occurred and providing them with an option to retry the operation.
+
+### Important Components:
+1. **`useEffect` Hook**: 
+   - This hook is used to log the error to an error reporting service when the component mounts. By logging errors, developers can track issues in the application and work towards resolving them.
+
+2. **`Card` Component**:
+   - The UI is structured using a `Card` component, which is likely a custom UI component that organizes the error message and related information in a visually appealing way.
+
+3. **`CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`**:
+   - These sub-components of the `Card` are used to structure the content neatly. `CardHeader` includes the title and an icon, `CardContent` contains the error message, and `CardFooter` provides a button for user interaction.
+
+4. **`Button` Component**:
+   - A button is provided for users to retry the operation that caused the error. The `reset` function is triggered when the button is clicked, which typically would attempt to re-execute the failed action.
+
+5. **`AlertCircle` Icon**:
+   - An icon is used to visually indicate an error, enhancing the user's understanding that something has gone wrong.
+
+### How They Work Together:
+- When an error occurs, the `Error` component is rendered, displaying a `Card` with a descriptive message and an error icon.
+- The `useEffect` hook logs the error, which helps in monitoring and debugging.
+- The `Card` components organize the error information and provide a structured layout.
+- The `Button` component allows the user to attempt to resolve the issue by retrying the operation, invoking the `reset` function.
+
+Overall, this setup provides a clear and structured way to handle errors, improving both the developer's ability to manage errors and the user's experience when something goes wrong.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/error.tsx ===
+The provided file, `error.tsx`, is part of a Next.js project and implements a user interface for handling errors. Here's a summary of its main functionality, components, and how they work together:
+
+### Main Functionality
+The `error.tsx` file provides an error boundary component for managing and displaying errors that occur in the application. It captures and logs the error, displays a user-friendly message, and offers an option to retry the operation that caused the error.
+
+### Important Components
+1. **Error Component**: This is the main component in the file, which takes in two props:
+   - `error`: An object representing the error, which may include a message and an optional `digest` for error tracking.
+   - `reset`: A function that allows the user to retry the operation by resetting the error state.
+
+2. **useEffect Hook**: Used to log the error when it changes, primarily for reporting to an external error monitoring service.
+
+3. **UI Components** (imported from `@/components/ui`):
+   - **Card**: Used to display the error details in a structured format, with sections for the header, content, and footer.
+   - **Button**: Provides an interactive element for the user to attempt to reset the error state and retry the operation.
+   - **AlertCircle Icon**: A visual indicator that an error has occurred, enhancing the user interface.
+
+### How They Work Together
+- When an error occurs, the `Error` component is rendered, displaying a message and a retry button within a styled card layout.
+- The `useEffect` hook logs the error to the console (or potentially to an external service) for monitoring and debugging purposes.
+- The card layout, consisting of `CardHeader`, `CardContent`, and `CardFooter`, organizes the error information and user actions:
+  - `CardHeader` displays the error title and description.
+  - `CardContent` shows the error message and optional error ID (`digest`), which can help with tracking specific issues.
+  - `CardFooter` contains a button for retrying the operation, invoking the `reset` function when clicked.
+
+Overall, this file provides a user-friendly way of handling errors within a Next.js application, allowing users to understand that something went wrong and giving them a straightforward option to retry the operation.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/loading.tsx ===
+The provided TypeScript/TSX file implements a loading screen for a Next.js application. Here are the details:
+
+### Main Functionality
+- **Loading Indicator:** The primary purpose of this component is to display a loading screen to users, indicating that content is being loaded or processed.
+
+### Important Components
+- **`Loading` Component:** This is the main component in the file. It renders a loading screen using a card layout.
+- **`Card` and `CardContent`:** These components are likely part of a UI library or custom components that provide a styled container (`Card`) and its content area (`CardContent`).
+- **`Loader2`:** This is an icon from the `lucide-react` library, used to visually indicate loading with a spinning animation.
+
+### How They Work Together
+1. **Structure:** The `Loading` component uses Flexbox CSS classes to center its contents both vertically and horizontally on the screen (`min-h-screen flex items-center justify-center`).
+
+2. **Card Layout:** It employs the `Card` component to encapsulate the loading indicator, setting a specific width (`w-[300px]`).
+
+3. **Loading Icon:** Inside the `CardContent`, the `Loader2` icon is rendered with a spinning animation (`animate-spin`) to show that a process is ongoing. The icon is styled with size and color properties (`h-8 w-8 text-primary`).
+
+4. **Loading Text:** Below the spinning icon, a paragraph element displays the text "Loading..." in a styled manner, indicating to users that they should wait for content to load.
+
+This loading component is likely used across the application to provide a consistent user experience when data is being fetched or processed, enhancing the perceived responsiveness of the app.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/loading.tsx ===
+The provided TypeScript/TSX file, `full-stack-nextjs/app/loading.tsx`, implements a loading screen component for a Next.js application. Here is a breakdown of its functionality and important components:
+
+### Main Functionality:
+The primary purpose of this file is to display a loading indicator to the user while content or data is being fetched or processed in the background. This is typically used in scenarios where an operation takes some time, and it is important to inform the user that the application is working as intended.
+
+### Important Components:
+1. **Loading Component**:
+   - This is the main functional component exported by the file. It consists of a structured layout that centers a loading indicator on the screen.
+
+2. **Card and CardContent**:
+   - These components are imported from a UI library (`@/components/ui/card`). They are used to create a styled container (`Card`) with content (`CardContent`) that holds the loading indicator and text.
+
+3. **Loader2**:
+   - This is an icon component from the `lucide-react` library, which is rendered as a spinning animation to visually indicate loading. The `animate-spin` class is likely a utility from a CSS framework (such as Tailwind CSS) to create the spinning animation effect.
+
+4. **Styling and Layout**:
+   - The component uses various utility classes, suggesting integration with a utility-first CSS framework like Tailwind CSS. These classes (`min-h-screen`, `flex`, `items-center`, `justify-center`, etc.) are used to ensure the loading indicator is centered both vertically and horizontally on the screen, providing a clean and focused user experience.
+
+### How They Work Together:
+- The `Loading` component is a self-contained UI element that can be easily integrated into other parts of the Next.js application to signify loading status. 
+- The `Card` and `CardContent` components provide a styled box that encapsulates the loading spinner and the accompanying text. 
+- The `Loader2` component provides a visual cue for loading through its spinning animation, enhanced by the `text-primary` class for appropriate color styling.
+- Overall, these components and styling utilities work together to create a polished and user-friendly loading screen that can be displayed during asynchronous operations within the application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/page.tsx ===
+The provided TypeScript/TSX file is part of a Next.js project and implements a landing page for an educational platform. Here's a breakdown of its main functionality and components:
+
+### Main Functionality:
+The landing page aims to introduce and promote an educational platform that connects tutors and students for a comprehensive and interactive learning experience. It highlights the platform's core features and invites users to sign up or learn more about the services offered.
+
+### Important Components and Their Roles:
+1. **Button Component**: 
+   - Used throughout the page for interactive elements like "Get Started," "Learn More," and "Sign Up Now."
+   - Provides call-to-action buttons with specific styles for primary and secondary actions.
+
+2. **Card Component**:
+   - Utilized in the "Core Features" section to showcase the platform's main functionalities.
+   - Each card includes an icon, title, description, and detailed content, such as user authentication, course management, Zoom link access, payment processing, and a student dashboard.
+
+3. **Accordion Component**:
+   - Featured in the "Frequently Asked Questions" section.
+   - Allows users to expand and collapse questions to find answers related to platform usage, such as signing up as a tutor, enrolling in courses, and understanding payment methods.
+
+4. **Image Component**:
+   - Displays a relevant image to enhance the visual appeal of the landing page.
+
+### How They Work Together:
+- **Layout**: The page is structured into sections that guide the user through a narrative. The sections include a hero section with a headline, a "Core Features" section detailing platform functionalities, an FAQ section, and a concluding call-to-action to encourage sign-ups.
+- **Styling**: Each section uses specific background colors and text styles to visually separate content and maintain an engaging design.
+- **User Interaction**: Buttons and accordions provide interactive elements that encourage user engagement and exploration of the platform's offerings.
+
+Overall, the file implements an engaging landing page designed to attract potential users by highlighting the educational platform's unique features and inviting them to take action.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/page.tsx ===
+The provided TypeScript/TSX file implements a landing page for an educational platform in a Next.js project. This landing page is designed to provide an overview of the platform's capabilities and encourage user engagement. Here are the key features and components:
+
+### Main Functionality
+- **Introduction to the Platform**: The landing page introduces the platform with a compelling slogan and description, aiming to attract users interested in an interactive educational experience.
+- **Core Features Overview**: The page highlights the main features of the platform, such as user authentication, course management, Zoom link access, payment processing, and a student dashboard.
+- **FAQs Section**: Provides answers to common questions, helping users understand how the platform works and how they can benefit from it.
+- **Call to Action**: Encourages users to sign up and start using the platform, with a focus on the benefits of joining.
+
+### Important Components
+- **Button Component**: Used for various interactive elements like "Get Started" and "Learn More" buttons. These buttons have different styles to differentiate primary actions from secondary ones.
+- **Card Component**: Displays the core features. Each card includes an icon, title, description, and additional details about a specific feature.
+- **Accordion Component**: Used in the FAQ section to neatly organize questions and answers. It allows users to click and expand each question to reveal the answer.
+- **Badge and Icons**: Utilized to enhance the visual appeal and user interface, providing a modern and engaging design.
+
+### How They Work Together
+- **Page Structure**: The landing page is structured into several sections, each serving a specific purpose. The sections flow from introducing the platform to detailing its features, addressing FAQs, and concluding with a call to action.
+- **Responsive Design**: The page layout is responsive, adjusting for different screen sizes with appropriately styled sections and components, ensuring a seamless user experience across devices.
+- **Theme and Style**: Consistent use of colors, typography, and icons helps in maintaining a cohesive look and feel throughout the page, which is crucial for brand identity.
+- **User Engagement**: The landing page is designed to guide users through the platform's offerings and ultimately encourage them to sign up, using a mix of informative content and interactive elements.
+
+Overall, this file implements a comprehensive landing page that serves as a promotional and informational entry point for potential users of the educational platform.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/not-found.tsx ===
+The provided TypeScript/TSX file seems to be part of a Next.js application and specifically implements a "404 Not Found" page feature. Here's a breakdown of the file:
+
+### Main Functionality
+The primary functionality of this code is to display a user-friendly "404 Not Found" page when a user tries to access a route that does not exist within the Next.js application. This page informs users that the page they are looking for cannot be found and provides a way to navigate back to the home page.
+
+### Important Components
+1. **NotFound Component**: This is the default exported function component, which serves as the 404 error page. It uses a combination of HTML, CSS classes, and imported components/icons to render the user interface.
+
+2. **Button Component**: This is imported from the `@/components/ui/button` path, indicating that it's a reusable UI component defined elsewhere in the project. It is styled with a primary background color and changes on hover, providing a button for navigation.
+
+3. **FileQuestion Icon**: This is another imported component from "lucide-react". It renders an icon that visually represents a question mark or an unknown file, enhancing the user interface of the error page.
+
+4. **Link Component**: This component from "next/link" is used to create a client-side navigation link that redirects users back to the home page when clicked.
+
+### How They Work Together
+- The `NotFound` component is structured as a full-page layout that centers its content both vertically and horizontally using CSS flexbox utilities (`flex`, `items-center`, `justify-center`).
+- The page is styled with a gradient background and contains a centered block of content, including an icon, headings, a description, and a button.
+- The `FileQuestion` icon adds a visual cue that something is missing or not found.
+- The heading "404" and subheading "Page Not Found" clearly communicate the purpose of the page.
+- A descriptive paragraph further explains the situation to the user.
+- The `Button` component wraps a `Link` element, making the entire button clickable and allowing users to easily navigate back to the homepage by clicking it.
+
+Overall, these components work together to create a cohesive and user-friendly 404 error page that maintains the application's branding and provides a clear path for the user to return to the site's main content.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/not-found.tsx ===
+The provided TypeScript/TSX file implements a custom "404 Not Found" page for a Next.js application. Here's a breakdown of its main functionality and components:
+
+### Main Functionality
+- **404 Error Page**: This file defines a custom 404 error page that is displayed when a user attempts to navigate to a page that does not exist within the Next.js application.
+
+### Important Components
+1. **NotFound Component**: This is the primary functional component of the file. It is responsible for rendering the entire 404 error page.
+
+2. **FileQuestion Icon**: This is an imported icon from the "lucide-react" library, used to visually indicate a missing page. The icon is styled and positioned centrally on the page.
+
+3. **Button and Link**: 
+   - **Button**: A styled button component from the "@/components/ui/button" path, which is used to provide a clickable interface for users.
+   - **Link**: A `Link` component from "next/link" that wraps the "Back to Home" text. This provides navigation back to the homepage of the application when clicked.
+
+### How They Work Together
+- The `NotFound` component renders a full-screen, centered layout styled with a gradient background and text elements that inform the user they have reached a non-existent page.
+- The `FileQuestion` icon is used as a visual representation of a missing page, enhancing the user experience by drawing attention to the error message.
+- The error message consists of a large "404" header, a "Page Not Found" subheader, and a brief explanatory paragraph.
+- The `Button` component contains a `Link` component that navigates the user back to the homepage (`"/"`). The button is styled to stand out, ensuring users can easily return to the main site.
+
+Overall, the file provides a user-friendly interface that informs users of navigation errors and assists them in returning to the main site.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/providers.tsx ===
+The provided TypeScript/TSX file is part of a Next.js project implementing user session management using the `next-auth` library. Here's a breakdown of its functionality and components:
+
+### Main Functionality
+The primary purpose of the file is to provide session management across the application. It wraps the application's components with a session provider to enable authentication and maintain user sessions.
+
+### Important Components
+1. **SessionProvider**: Imported from `next-auth/react`, this component is crucial for handling authentication states. It manages user sessions and makes the session data accessible throughout the application.
+
+2. **SessionWrapper**: This is a custom React component defined in the file. It acts as a wrapper around the `SessionProvider` and includes the application's children components. By doing so, it ensures that all components nested within have access to the authentication context provided by `next-auth`.
+
+### How They Work Together
+- The `SessionWrapper` component is marked as a client component using the `"use client";` directive. This is necessary because session management involves client-side operations, such as handling cookies and session storage.
+- The `SessionWrapper` component takes `children` as a prop, indicating that it can wrap around any part of the application that needs access to the authentication context.
+- By rendering the `SessionProvider` with the `children` prop, the `SessionWrapper` ensures that any component within its hierarchy can access session-related data and functionalities, such as checking if a user is authenticated, fetching user details, and handling user login/logout actions.
+
+In summary, this file sets up the foundation for session management in a Next.js application by utilizing `next-auth` to provide authentication context across the application, enabling authentication features throughout.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/providers.tsx ===
+The provided file is part of a Next.js project implementing user session management using NextAuth.js. Here's a summary of its main functionality, important components, and how it works within the project:
+
+### Main Functionality
+- **Session Management**: The file sets up a context for managing user sessions across the application using NextAuth.js. This allows for authentication states (logged in, logged out) to be accessible throughout the app.
+
+### Important Components
+- **SessionProvider**: This component is imported from `next-auth/react` and is crucial for managing authentication states. It acts as a context provider, making session data available to any component wrapped within it.
+
+- **SessionWrapper**: This is a custom React component defined in the file. It wraps the children components within the `SessionProvider`, thereby enabling session management for all components nested within.
+
+### How They Work Together
+- The `SessionWrapper` component is designed to be a "client component", as indicated by the `"use client"` directive at the top of the file. This means it will run on the client-side and is intended for managing client-specific logic like session handling.
+
+- The `SessionWrapper` takes `children` as a prop, which represents any React components that need access to session data. It wraps these children with the `SessionProvider`, effectively providing them with session context.
+
+- This setup is typically used at the top level of the application, often in a custom App component or a layout component, to ensure that all parts of the app have access to session information.
+
+In summary, this file provides a foundational setup for handling user authentication states in a Next.js application, ensuring that session data is available to components that need it throughout the app.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/dashboard/page.tsx ===
+### Feature Description
+
+The provided TypeScript/TSX file, `page.tsx`, is part of a Next.js project that implements a user authentication and redirection feature for a "Dashboard" page. This feature ensures that only authenticated users can access the dashboard and redirects them to an appropriate sub-page based on their user role. If a user is not authenticated, they are redirected to the login page.
+
+### Main Functionality
+
+- **User Session Management**: It uses `next-auth/react` to manage user sessions and determine whether a user is authenticated.
+- **Role-based Redirection**: Once authenticated, users are redirected to a specific dashboard page based on their role.
+- **Loading Indicator**: Displays a loading message while session status is being determined.
+
+### Important Components
+
+- **`useSession` Hook**: This hook from `next-auth/react` is used to access session data, which includes user authentication status and user-specific information.
+  
+- **`useRouter` Hook**: This hook from `next/navigation` is used to programmatically navigate users to different pages within the Next.js application.
+
+### How They Work Together
+
+1. **Session and Router Initialization**: The component initializes session data (`data`) and status (`status`) using the `useSession` hook. It also initializes the router using `useRouter`.
+
+2. **Effect for Redirection**: Inside a `useEffect` hook, the component checks the session status:
+   - If the status is "loading", it does nothing further to avoid premature redirection.
+   - If session data (`data`) is present, it indicates that the user is authenticated. The component then redirects the user to a dashboard sub-page based on their role (`data.user.role`). If no role is specified, it defaults to "user".
+   - If there is no session data, indicating the user is not authenticated, it redirects the user to the "/login" page.
+
+3. **Conditional Rendering**: While the session status is loading, it renders a "Loading..." message. Once it finishes checking the session, if the user is about to be redirected, it briefly shows a "redirecting..." message.
+
+This setup ensures that users are appropriately routed based on their authentication status and role, enhancing both security and user experience within the application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/dashboard/page.tsx ===
+The provided TypeScript/TSX file is part of a Next.js project and implements an authentication-based redirection feature within the dashboard of the application. Here's a breakdown of the main functionality, important components, and how they work together:
+
+### Main Functionality
+The primary functionality of this file is to handle user session checking and redirect users based on their authentication status and role. It ensures that users are either directed to their respective dashboard pages based on their roles or redirected to the login page if they are not authenticated.
+
+### Important Components and Functions
+1. **useSession**: This hook, provided by `next-auth/react`, is used to access the session data and status. It helps determine if a user is logged in and retrieves user-related information such as their role.
+
+2. **useRouter**: This hook, from `next/navigation`, is used for programmatic navigation. It allows the component to redirect users to different pages based on the authentication and role data obtained from the `useSession` hook.
+
+3. **useEffect**: A React hook that performs side effects in functional components. In this case, it is used to check the session status and perform the redirection logic whenever session data changes or the component mounts.
+
+### How They Work Together
+- **Session Handling**: When the component is rendered, `useSession` checks the session status. The component initially shows a loading message until the session status is determined.
+
+- **Redirection Logic**:
+  - If the session status is "loading", the component does nothing until the authentication status is resolved.
+  - Once the session status is resolved, the effect checks if session data is available:
+    - If authenticated (`data` is present), the router navigates the user to their role-specific dashboard (e.g., `/dashboard/admin` if the role is "admin").
+    - If not authenticated (`data` is null or undefined), the router redirects the user to the `/login` page.
+
+- **User Feedback**: While the session status is loading, a loading message is displayed. After the status is resolved, a "redirecting..." message is shown until navigation is complete.
+
+This setup ensures secure access to dashboard pages by redirecting unauthenticated users to the login page while authenticated users are directed to the appropriate dashboard based on their role.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/auth/[...nextauth]/route.ts ===
+The provided TypeScript/TSX file is part of a Next.js project and implements user authentication functionality using NextAuth.js, a popular authentication library for Next.js applications. Here is a breakdown of the feature:
+
+### Main Functionality
+The main functionality of this file is to set up authentication routes for the application using NextAuth.js. It creates an API route for authentication at `app/api/auth/[...nextauth]/route.ts`, handling user sign-in, sign-out, session management, and potentially other authentication-related operations supported by NextAuth.js.
+
+### Important Components
+1. **`NextAuth` Configuration**: The file imports the `NextAuth` function from the `next-auth` package and configures it using `authOptions` imported from `@/lib/authOptions`. This configuration would typically include settings for authentication providers (like Google, GitHub, etc.), callbacks, session handling, and other options specific to the application's authentication requirements.
+
+2. **TypeScript Interfaces**: The file extends TypeScript interfaces for `User` and `Session` within the `next-auth` module. 
+   - **`User` Interface**: Defines the structure of the user object, including properties like `id`, `username`, `name`, `email`, `role`, and `token`.
+   - **`Session` Interface**: Defines the structure of the session object, including a nested `user` object and a `token`. This extension allows for strongly typed access to session and user data within the application.
+
+3. **API Route Handlers**: The file exports the handler created by `NextAuth` as both `GET` and `POST` handlers. This means that HTTP GET and POST requests to this API endpoint will be handled by NextAuth, facilitating operations like fetching session data and authenticating users.
+
+### How They Work Together
+- **`NextAuth` Configuration**: The `NextAuth` function is configured with `authOptions`, which would specify the authentication providers and other settings. This configuration is central to determining how authentication flows are handled.
+
+- **TypeScript Interfaces**: By extending the default interfaces provided by NextAuth, the file ensures that additional user and session properties can be used throughout the application with TypeScript's type safety. This is useful for accessing custom user properties and session information in a type-safe manner.
+
+- **API Route Handlers**: The exported `GET` and `POST` handlers integrate with the Next.js routing system, making authentication-related operations accessible at the specified API endpoint. Requests to this endpoint will be processed by NextAuth, providing the necessary authentication features like login, logout, and session retrieval.
+
+Overall, this file is crucial for integrating authentication into the Next.js application, leveraging NextAuth for handling complex authentication scenarios while providing type safety through TypeScript interfaces.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/auth/[...nextauth]/route.ts ===
+The provided TypeScript file is part of a Next.js project and implements authentication functionality using NextAuth.js. Here's a breakdown of its components and how they work together:
+
+### Main Functionality
+The primary functionality of this file is to set up and handle authentication routes in a Next.js application using NextAuth.js. It facilitates user authentication by defining user and session interfaces and exporting an authentication handler for HTTP GET and POST requests.
+
+### Important Components
+
+1. **User and Session Interfaces**:
+   - The file extends the `next-auth` module to define custom interfaces for `User` and `Session`.
+   - **User Interface**: This includes fields such as `id`, `username`, `name`, `email`, `role`, and `token`. These fields represent the properties of a user object.
+   - **Session Interface**: This contains a `user` object with fields like `id`, `username`, `name`, `email`, and `role`, as well as a `token`. This represents the session state associated with an authenticated user.
+
+2. **NextAuth Handler**:
+   - The file imports `NextAuth` from the `next-auth` package and uses it to create an authentication handler. 
+   - `authOptions` is imported from a separate module (`@/lib/authOptions`), which presumably contains configuration options for NextAuth, such as providers, callbacks, and session settings.
+
+3. **Route Exports**:
+   - The handler is exported for both GET and POST requests, indicating that this route will handle authentication requests made to `/api/auth/[...nextauth]`.
+   - This allows the application to support and process incoming authentication requests, such as logging in or checking session status.
+
+### How They Work Together
+- The TypeScript module extends `next-auth` interfaces to specify the structure of user and session objects. This customization ensures that the application can work with additional user data like `role` and `token`.
+- The `NextAuth` function is configured with `authOptions`, which are likely defined elsewhere in the project to include authentication providers (e.g., Google, GitHub), session management, and any custom callbacks.
+- By exporting the handler for both GET and POST requests, this file enables Next.js to handle authentication-related requests at the specified route, thereby managing user sessions and authentication seamlessly.
+
+Overall, this file is a critical part of setting up authentication in a Next.js application using NextAuth.js, providing a structure for user data and enabling the necessary routes for authentication operations.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/google/route.ts ===
+The provided TypeScript file is part of a Next.js project and implements a feature for handling user authentication using Google accounts. Here's a breakdown of the main functionality and components:
+
+### Main Functionality
+The primary function of this file is to authenticate users via their Google accounts. This is achieved by:
+1. **Receiving a POST request**: The request contains user data, specifically the `email` and `name` fields, which are extracted from the request body.
+2. **User Verification and Creation**:
+   - The system checks if a user with the provided email already exists in the database using Prisma ORM.
+   - If the user does not exist, a new user is created with the provided email and name. The username is generated from the part of the email before the "@" symbol.
+3. **JWT Token Generation**:
+   - Once the user is verified or created, a JWT (JSON Web Token) is generated. This token includes the user's ID, username, email, and role, and is signed using a secret key. The token is set to expire in 10 days.
+4. **Response Construction**:
+   - A successful response includes the user data and the generated token, indicating successful authentication.
+   - In case of an error, a failure response is returned with the appropriate message.
+
+### Important Components
+- **Prisma ORM**: This is used to interact with the database. It checks for existing users and creates new users if necessary.
+- **JWT (jsonwebtoken)**: A library used to create and verify JSON Web Tokens, which are used for user session management.
+- **NextRequest and NextResponse**: These are Next.js server components for handling incoming requests and outgoing responses.
+
+### How They Work Together
+- The `POST` function acts as an API route handler. When a request is made to this route, it triggers the flow of checking the user existence, creating a user if needed, generating a JWT, and constructing a response.
+- The `prisma` instance allows interaction with the database to persist user data.
+- The `jsonwebtoken` library provides functionality to securely generate a token that can be used to authenticate subsequent requests from the client.
+- Finally, `NextRequest` and `NextResponse` facilitate the seamless integration of this server-side logic within the Next.js application, allowing it to handle HTTP requests and responses efficiently.
+
+Overall, this file implements the backend logic for Google-based user authentication in a Next.js application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/google/route.ts ===
+The provided code snippet is a TypeScript file from a Next.js project that implements a feature for authenticating users via Google OAuth. Here’s a breakdown of its main functionality, important components, and how they work together:
+
+### Main Functionality:
+
+The file implements an API endpoint for handling user authentication using Google OAuth credentials. It processes user information received from a Google login, checks if the user already exists in the database, and generates a JSON Web Token (JWT) for session management.
+
+### Important Components:
+
+1. **Next.js API Route**:
+   - The file defines a `POST` method for handling requests to the `/api/users/google` endpoint.
+
+2. **Prisma**:
+   - It uses Prisma, a database ORM, to interact with the database. It checks if the user already exists based on their email and creates a new user record if they don't.
+
+3. **JWT (JSON Web Token)**:
+   - The `jsonwebtoken` library is used to generate a JWT that includes user information such as `id`, `username`, `email`, and `role`. This token is used for authenticating future requests.
+
+4. **Environment Variables**:
+   - The `SECRET_KEY` is used for signing the JWT. It is recommended to use a strong secret stored in an environment variable.
+
+### How They Work Together:
+
+- **Request Handling**: The function listens for POST requests containing user information (email and name) in JSON format.
+- **User Lookup and Creation**: 
+  - It first checks if the user exists in the database using their email.
+  - If the user does not exist, it creates a new user entry in the database with the provided email and name. The username is derived from the email.
+- **JWT Token Creation**: 
+  - A JWT is generated for the user, encapsulating their ID, username, email, and role. The token is set to expire in 10 days.
+- **Response**:
+  - The function sends back a JSON response containing a success message, the user data, and the JWT token if the operation is successful.
+  - If an error occurs, it logs the error and returns a failure message with a 500 status code.
+
+In summary, this file is responsible for managing user authentication via Google OAuth, creating user records if they don't exist, and issuing JWT tokens for session management in a Next.js application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/signup/route.ts ===
+The provided TypeScript file is part of a Next.js project and implements a user signup feature for a web application. Here's a breakdown of its main functionality, components, and how they work together:
+
+### Main Functionality
+The primary functionality of this file is to handle user signup requests. It processes incoming POST requests to create new user accounts, ensuring that necessary validations are performed, and a new user record is added to the database if the request is valid. Additionally, it generates a JSON Web Token (JWT) for the newly created user, which can be used for authentication purposes in subsequent requests.
+
+### Important Components and How They Work Together
+
+1. **Request Handling and Validation:**
+   - The file exports an asynchronous `POST` function that handles HTTP POST requests.
+   - It expects a `SignupRequestBody` object in the request, which includes the user's `email`, `password`, and optionally `role` and `name`.
+   - The code first checks if `email` and `password` are provided; if not, it responds with a 400 status and an error message.
+
+2. **Database Interaction with Prisma:**
+   - The function checks if a user with the provided email already exists using `prisma.user.findUnique`.
+   - If a user exists, it returns a 400 status with an appropriate error message.
+   - If the user doesn't exist, it proceeds to create a new user record using `prisma.user.create`.
+   - The password is hashed for security using `bcrypt` before storing it in the database.
+
+3. **User Creation:**
+   - The new user is created with a default `username` derived from the email, a default `name` if not provided, and a default `role` of "user" if not specified.
+
+4. **JWT Token Generation:**
+   - After successfully creating the user, the function generates a JWT token using `jsonwebtoken`.
+   - The token includes the user's ID, email, username, and role as payload and is signed with a secret key from environment variables.
+   - The token is set to expire in 10 days.
+
+5. **Response:**
+   - On successful signup, the function responds with a 201 status, including a success message, the generated token, and user data in the response.
+   - If any errors occur during the process, it catches them and responds with a 500 status and an appropriate error message.
+
+### Integration
+This file is likely part of a larger authentication system in the Next.js application. It would be integrated with other routes and client-side components to provide a complete user registration and authentication experience. The JWT token generated can be used to manage user sessions and authenticated requests to other parts of the application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/signup/route.ts ===
+The provided TypeScript file `full-stack-nextjs/app/api/users/signup/route.ts` implements a signup feature for a Next.js application. Here’s an overview of its main functionality, components, and how they work together:
+
+### Main Functionality
+The primary functionality of this file is to handle user registration (signup) requests. It processes incoming HTTP POST requests to create new user accounts in the application's database and returns a JSON response indicating success or failure. The key operations include:
+
+1. **Input Validation:** The code checks that the required fields (`email` and `password`) are provided in the request body.
+
+2. **User Existence Check:** It verifies whether a user with the same email already exists in the database using Prisma ORM.
+
+3. **Password Hashing:** If the user does not exist, it hashes the password using bcrypt to ensure secure storage.
+
+4. **User Creation:** It creates a new user record in the database with the provided details, including a default name ("Albert") if not specified, and the role (defaulting to "user").
+
+5. **JWT Token Generation:** Upon successful user creation, the code generates a JWT (JSON Web Token) for user authentication, which includes user details and is set to expire in 10 days.
+
+6. **Response Handling:** It returns a JSON response indicating the success of the signup process, along with the user data and JWT token, or an error message if something goes wrong.
+
+### Important Components
+- **Prisma ORM:** Used to interact with the database, checking for existing users and creating new ones.
+- **Bcrypt:** Used for securely hashing user passwords before storing them in the database.
+- **JWT (jsonwebtoken):** Used to generate authentication tokens for users, allowing them to authenticate subsequent requests.
+- **NextResponse:** Utilized to construct and send HTTP responses.
+
+### How They Work Together
+- The Next.js API route is defined to handle POST requests specifically for user signup.
+- When a request is received, it extracts and validates the input data.
+- It uses Prisma to query the database and determine if the user already exists.
+- If the user does not exist, it hashes the password with bcrypt and creates a new user record in the database.
+- After successful user creation, a JWT is generated to enable authentication for the user.
+- Finally, the API responds with a success message, including the user data and token, or an error message if any step fails.
+
+This setup is part of the backend logic for user authentication, focusing specifically on the signup process. It ensures secure and unique user registration, providing the necessary credentials for authenticated access to the application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/[userId]/route.ts ===
+The provided TypeScript file is part of a Next.js application, specifically handling API routes for user management. Here's an overview of the feature it implements:
+
+### Main Functionality
+The file `route.ts` under `app/api/users/[userId]/` implements two main functionalities for user management:
+1. **Update User Profile**: It allows updating a user's profile, specifically their name, using a PUT request.
+2. **Delete User**: It allows deleting a user from the database using a DELETE request.
+
+### Important Components and How They Work Together
+- **Prisma**: The file uses Prisma as an ORM (Object-Relational Mapping) tool to interact with the database. It's used to perform operations such as updating and deleting user records.
+
+- **PUT Request Handler**: 
+  - This function is responsible for updating a user's profile. 
+  - It extracts the `name` from the request body and `userId` from the URL parameters.
+  - It checks if these required fields are provided; if not, it returns a 400 status response with an error message.
+  - Using Prisma, it updates the user's name in the database and returns a success message with the updated user data. If an error occurs, it returns a 500 status response with an error message.
+
+- **DELETE Request Handler**: 
+  - This function handles deleting a user.
+  - It extracts the `userId` from the URL parameters and checks if it's provided.
+  - Using Prisma, it deletes the user with the specified ID from the database and returns a success message. If an error occurs, it returns a 500 status response with an error message.
+
+### How They Work Together
+These API routes collectively provide a backend service for managing user data within the application. The PUT route enables updating user details, while the DELETE route allows for user removal. They rely on Prisma for database interactions and Next.js's response utilities to handle API responses effectively. Together, they form a critical part of user profile management in the application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/[userId]/route.ts ===
+The provided TypeScript file is part of a Next.js project, specifically an API route that implements user profile management features. Here's a breakdown of its functionality:
+
+### Main Functionality:
+The file defines two main API operations for managing user profiles in a database:
+1. **Update User Profile (PUT request)**: 
+   - This operation allows updating a user's profile information, specifically the user's name.
+   - It accepts a JSON payload containing the `name` field and updates the user record in the database based on the provided `userId` parameter.
+
+2. **Delete User (DELETE request)**:
+   - This operation allows deleting a user from the database using the provided `userId` parameter.
+
+### Important Components:
+- **Prisma Client (`prisma`)**: 
+  - This is assumed to be an ORM (Object-Relational Mapping) tool used to interact with the database. It facilitates database operations such as updating and deleting user records.
+
+- **NextResponse**:
+  - A utility from Next.js used to send structured HTTP responses back to the client.
+
+### How They Work Together:
+- The API endpoints are defined as asynchronous functions (`PUT` and `DELETE`), which are invoked depending on the HTTP method of the request.
+- Both functions extract parameters and body content from the request and perform validation to ensure necessary data is provided (`name` for the update and `userId` for both operations).
+- The `prisma` client is used to interact with the database:
+  - For the PUT operation, it updates the user record with a new name.
+  - For the DELETE operation, it removes the user record from the database.
+- Finally, both functions return a JSON response using `NextResponse.json`, indicating the success or failure of the operation, along with relevant messages and data.
+
+These components and operations collectively form the backend logic for updating and deleting user profiles in a Next.js application, utilizing server-side API routes and database interactions via Prisma.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/login/route.ts ===
+The provided file `route.ts` is part of a Next.js project and implements a user login feature through an API endpoint. Here's a breakdown of its main functionality, important components, and how they work together:
+
+### Main Functionality
+The main functionality of this file is to handle user login requests. It processes `POST` requests sent to the `/api/users/login` endpoint, validates user credentials, and returns a JSON Web Token (JWT) upon successful authentication.
+
+### Important Components
+- **Prisma:** A database ORM (Object-Relational Mapping) tool used to interact with the database. In this context, it is used to query the user data from the database by email.
+- **bcrypt:** A library used for hashing passwords. It is used here to compare the entered password with the stored hashed password in the database.
+- **jsonwebtoken (jwt):** A library used for generating JWTs. It is used to create a token that is returned to the client upon successful authentication.
+- **NextResponse:** Part of Next.js, used to construct HTTP responses.
+
+### How They Work Together
+1. **Request Handling:** The `POST` function is an asynchronous function that handles incoming POST requests to the login endpoint. It expects a request body containing `email` and `password` fields.
+
+2. **Input Validation:** The function checks if both `email` and `password` are provided. If not, it responds with a 400 status and a relevant error message.
+
+3. **User Lookup:** It uses Prisma to query the database for a user with the provided email. If no user is found or if the user signed up with Google (indicated by a `null` password), a 401 status is returned with an error message.
+
+4. **Password Verification:** If a user is found and has a password, `bcrypt.compare` is used to compare the provided password with the stored hashed password. If the passwords do not match, a 401 status is returned.
+
+5. **Token Generation:** Upon successful verification, a JWT is generated with the user's ID, email, username, and role. The token is signed using a secret and has an expiration of 10 days.
+
+6. **Response Construction:** A successful response is constructed using `NextResponse.json`, containing a success message, the JWT token, and user data, and returned with a 200 status.
+
+Overall, this file provides a secure way to authenticate users by validating credentials and issuing a token for further authenticated requests.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/api/users/login/route.ts ===
+The provided TypeScript file is part of a Next.js project and implements a login feature for users. Here's a summary of the main functionality and how it works:
+
+### Main Functionality:
+The primary goal of this feature is to handle user login requests. It verifies user credentials and provides a JSON Web Token (JWT) for successful authentication.
+
+### Important Components:
+1. **`POST` Function**:
+   - This is an asynchronous function that handles POST requests to the login endpoint.
+   - It expects to receive a request body containing the user's email and password.
+
+2. **Request Validation**:
+   - The function checks if the email and password are provided. If not, it returns a 400 status with an error message.
+
+3. **User Retrieval**:
+   - The function uses Prisma ORM (`prisma.user.findUnique`) to find a user by their email in the database.
+
+4. **Password Validation**:
+   - If a user is found, it checks if the password is null, which indicates that the user signed up via Google and should use Google login instead.
+   - For standard logins, it uses `bcrypt.compare` to verify the provided password against the stored password hash.
+
+5. **JWT Token Generation**:
+   - Upon successful password validation, it generates a JWT token using `jsonwebtoken.sign`.
+   - The token includes user information (id, email, username, role) and is configured to expire in 10 days.
+
+6. **Response Handling**:
+   - Depending on the outcome (missing credentials, invalid credentials, or login success), it returns a JSON response with an appropriate message and status code (400, 401, or 200).
+
+### How They Work Together:
+- The route handler (`POST` function) is the entry point for login requests. It orchestrates the entire login flow by:
+  - Validating input data.
+  - Interacting with the database to retrieve user data.
+  - Verifying credentials using bcrypt for security.
+  - Issuing a JWT token for authenticated sessions.
+  - Returning structured responses to the client based on the login attempt's success or failure.
+
+This implementation ensures that user logins are processed securely and efficiently, providing feedback for various outcomes (e.g., missing data, invalid credentials, successful login).
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/(auth)/register/page.tsx ===
+The provided TypeScript/TSX file is part of a Next.js project and implements a user registration feature. Here's a breakdown of the main functionality, important components, and how they work together:
+
+### Main Functionality
+The primary purpose of this file is to provide a user registration page where new users can sign up for an account. The page allows users to enter their name, email, password, and select a role (either "Tutor" or "Student"). Additionally, it provides an option to sign up using Google authentication.
+
+### Important Components and Their Roles
+1. **State Management**:
+   - The component uses React's `useState` hook to manage form input states for `name`, `email`, `password`, and `role`.
+   - It also manages loading states (`loading`, `googleLoading`) to handle asynchronous operations and display loading indicators.
+
+2. **Form Elements**:
+   - **Label**: Used to label input fields.
+   - **Input**: Collects user's name, email, and password.
+   - **Select**: Allows users to select their role (either "Tutor" or "Student").
+
+3. **Buttons**:
+   - **Submit Button**: Triggers form submission and user registration via email/password.
+   - **Google Sign-In Button**: Initiates Google OAuth sign-in process.
+
+4. **Next.js and Next-Auth Integration**:
+   - Utilizes `useRouter` from `next/navigation` to handle routing after signup.
+   - Uses `useSession` from `next-auth/react` to manage session data.
+   - Employs `signIn` from `next-auth/react` to handle authentication, both for credentials and Google OAuth.
+
+5. **Axios and Toast Notifications**:
+   - Uses axios for making HTTP POST requests to the backend API endpoint (`/api/users/signup`) for user registration.
+   - Employs `sonner` for displaying toast notifications to inform users of success or error during the registration process.
+
+### How They Work Together
+- The component renders a registration form with inputs for name, email, password, and role selection.
+- Upon form submission, the `signUpUser` function is triggered, which validates the input and sends a POST request to register the user using axios.
+- If the registration is successful, it attempts to log in the user using credentials authentication, providing feedback via toast notifications.
+- The user is then redirected to the dashboard upon successful signup and login.
+- Optionally, users can sign up using Google, which triggers the Google OAuth flow and redirects to the dashboard upon completion.
+- Loading indicators are displayed while asynchronous operations are in progress, enhancing user experience.
+
+In summary, this file implements a user-friendly registration page with options for both standard email/password signup and Google OAuth, integrated with toast notifications for feedback and seamless redirection post-authentication.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/(auth)/register/page.tsx ===
+The provided TypeScript/TSX file is part of a Next.js application and implements a registration (signup) page for new users. Here's a breakdown of its main functionality, important components, and how they work together:
+
+### Main Functionality
+
+The main functionality of this file is to provide a user interface for new users to register for an account on the website. It handles user input, validation, form submission, and displays feedback based on the success or failure of the registration process.
+
+### Important Components
+
+1. **State Management:**
+   - `useState` is used to manage local state for user input fields like name, email, password, role, and loading states for form submission and Google sign-in.
+
+2. **UI Components:**
+   - `Label`, `Input`, `Button`, and `Select` are imported from a UI library. These components are used to construct the form elements, including input fields and buttons for user interaction.
+
+3. **Authentication:**
+   - `useSession` and `signIn` from `next-auth/react` are utilized to manage user sessions and perform sign-in actions.
+   - Google authentication is supported via the `signIn` function with the provider as "google".
+
+4. **Form Handling:**
+   - The `signUpUser` function is the main handler for form submission. It validates the input, sends user details to the server via an API call, and attempts to sign in the user upon successful registration.
+
+5. **Feedback:**
+   - The `toast` function from `sonner` is used to display success or error messages to the user based on the outcome of the registration process.
+
+### How They Work Together
+
+- **Form Rendering:** The page renders a registration form with fields for name, email, role, and password. A dropdown (`Select`) allows the user to choose between roles like "Tutor" or "Student".
+
+- **Form Submission:** When the form is submitted, `signUpUser` is triggered. This function performs client-side validation and then sends a POST request to the server endpoint `/api/users/signup` with the user data.
+
+- **User Feedback:** If the registration is successful, a success toast is shown, and the user is redirected to the dashboard. If there's an error, an error toast is displayed.
+
+- **Google Sign-In:** The form also includes a button for signing in with Google. When clicked, it initiates the Google sign-in process and redirects the user to the dashboard upon success.
+
+- **Loading States:** Loading indicators are shown on the buttons during form submission and Google sign-in to enhance user experience by indicating a process is underway.
+
+Overall, this file provides a comprehensive user registration feature, integrating form management, API interaction, authentication, and user feedback in a cohesive manner within a Next.js application.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/(auth)/login/page.tsx ===
+The provided TypeScript/TSX file implements a login feature for a Next.js application. Here's a breakdown of its main functionality, important components, and their interactions:
+
+### Main Functionality
+The file defines a `LoginPage` component that serves as the user interface for signing into the application. It allows users to log in using either their email and password or by signing in with Google. The component handles form input, form submission, and redirects users upon successful authentication.
+
+### Important Components and Their Roles
+1. **`LoginPage` Component**:
+   - This is the main component of the file and represents the login page.
+   - It uses React hooks such as `useState` to manage local state for form inputs (email and password), and loading states (for both email/password and Google sign-in processes).
+
+2. **Form Elements**:
+   - **Email and Password Inputs**: Utilizes `Input` components to capture user credentials. These inputs are controlled components, meaning their values are stored in the component's state and updated via the `onChange` event.
+   - **Submit Button**: A `Button` component which, when clicked, triggers the `loginUser` function to authenticate the user with email and password. The button shows a loading spinner when the authentication process is ongoing.
+
+3. **Third-Party Authentication**:
+   - **Google Sign-In Button**: Another `Button` component that allows users to sign in with Google. It triggers the `signIn` function provided by `next-auth/react` with "google" as the provider.
+
+4. **`next-auth/react`**:
+   - **`signIn` Function**: Used to perform the authentication process. It takes the provider type ("credentials" or "google") and relevant user data.
+   - **`useSession` Hook**: Retrieves the current authentication session, which helps in redirecting users to the appropriate dashboard based on their role after successful login.
+
+5. **Feedback and Navigation**:
+   - **`toast` from "sonner"**: Used to display error messages when the login attempt fails.
+   - **`useRouter` from "next/navigation"**: Facilitates client-side navigation, redirecting authenticated users to their respective dashboard.
+   - **`Link` Component**: Provides a navigable link to the registration page for users who do not have an account.
+
+### How They Work Together
+- The `LoginPage` component renders a form with inputs for the user's email and password. Users can submit this form to log in using these credentials.
+- When the form is submitted, the `loginUser` function is executed. This function utilizes `signIn` from `next-auth/react` with "credentials" to attempt authentication.
+- If authentication is successful, the user is redirected to their relevant dashboard based on their role, determined from the session data.
+- Alternatively, users can opt to use Google sign-in by clicking the corresponding button, which triggers a similar flow with the "google" provider.
+- Throughout the process, loading states and error messages are managed to provide feedback to the user.
+
+This file effectively creates a user-friendly and responsive login interface, integrating both traditional and third-party authentication methods.
+--------------------------------------------------------------------------------
+=== Feature Summary for full-stack-nextjs/app/(auth)/login/page.tsx ===
+The provided TypeScript/TSX file from a Next.js project implements a login page for user authentication. Here's a breakdown of its main functionality and components:
+
+### Main Functionality
+This file is responsible for providing a user interface and functionality for users to log into their accounts. It includes:
+- **Traditional Email Login**: Users can enter their email and password to log in.
+- **Google Login**: Users have the option to log in using their Google account.
+
+### Important Components
+- **`useState` Hook**: Manages local state for email, password, loading indicators, and Google login status.
+- **`useRouter` Hook**: Provides navigation capabilities after a successful login.
+- **`useSession` Hook**: Accesses the current authentication session data from `next-auth`.
+- **Form Elements**: Includes labeled input fields for email and password using custom `Label` and `Input` components.
+- **Buttons**: Utilizes custom `Button` components for form submission and Google login.
+- **Loading Indicators**: Uses `LoaderCircleIcon` and `Loader2` for displaying loading states during authentication processes.
+- **`signIn` Function**: Part of `next-auth/react`, it handles the authentication process using either credentials or Google OAuth.
+- **`toast`**: Provides user feedback for errors during the login process.
+
+### How They Work Together
+1. **Form Handling**: The `LoginPage` component renders a form with inputs for email and password. It includes a button to submit the form.
+2. **Email/Password Login**: On form submission, `loginUser` is called. This async function attempts to sign in using credentials. If successful, the user is redirected to their dashboard. If not, an error toast is shown.
+3. **Google Login**: A separate button triggers the Google OAuth login. The `signIn` function with "google" provider initiates the login process and redirects to the dashboard upon success.
+4. **Loading States**: Both login methods have loading states to indicate processing, preventing multiple submissions.
+5. **Navigation and Feedback**: The `useRouter` hook is used to navigate users after a successful login, and the `toast` library provides error messages for unsuccessful attempts.
+
+Overall, this file implements a user-friendly login page with multiple authentication options, using Next.js and `next-auth` for managing authentication state and user sessions.
+--------------------------------------------------------------------------------
